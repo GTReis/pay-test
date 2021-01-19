@@ -1,0 +1,29 @@
+version: "3"
+services: 
+  preauth-microservice:
+    image: preauth-microservice
+    hostname: localhost
+    ports: 
+      - "8082:8082"
+    links:
+      - capture-microservice
+    networks: 
+      - backend
+  capture-microservice:
+    image: capture-microservice
+    expose: 
+      - "8081"
+    links: 
+      - refund-microservice
+    networks: 
+      - backend
+  refund-microservice:
+    image: refund-microservice
+    expose: 
+      - "8083"
+    networks: 
+      - backend
+
+networks:
+  backend:
+    driver: bridge
